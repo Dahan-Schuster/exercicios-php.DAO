@@ -2,8 +2,9 @@
 require_once ('config.php');
 
 
-$usuario = new Usuario("Patolino Físico", "Quark");
+$usuario = new Usuario();
 
-$usuario->insert();
+$usuario->loadById(6);
+$usuario->update("Sakura", "TESTAndo");
 
 echo $usuario;
