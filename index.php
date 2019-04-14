@@ -2,6 +2,8 @@
 require_once ('config.php');
 
 
-$usuarios = Usuario::search('a');
+$usuario = new Usuario();
 
-echo $usuarios;
+$usuario->login("Fanisz", "y2y2y2y2");
+
+echo $usuario;
