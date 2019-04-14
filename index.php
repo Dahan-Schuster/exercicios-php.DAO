@@ -1,8 +1,7 @@
 <?php
 require_once ('config.php');
 
-$usuario = new Usuario();
 
-$usuario->loadById(3);
+$usuarios = Usuario::loadAll(Usuario::JSON_LIST);
 
-echo $usuario;
+echo $usuarios;
