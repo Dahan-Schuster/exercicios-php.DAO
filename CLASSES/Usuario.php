@@ -13,6 +13,25 @@ class Usuario
     const RAW_LIST = 1;
     const JSON_LIST = 2;
 
+
+    public function login($login, $senha)
+    {
+        $sql = new Sql();
+
+        $result = $sql->select("SELECT * FROM tb_usuarios WHERE login = :LOGIN AND senha = :SENHA", array(
+            ":LOGIN"=>$login,
+            ":SENHA"=>$senha
+        ));
+
+        if (count($result) > 0)
+        {
+            $row = $result[0];
+            $this->setId($row['id']);
+            $this->setLogin($row['login']);
+            $this->setSenha($row['senha']);
+        }
+    }
+
     public function loadById($id)
     {
         $sql = new Sql();
@@ -28,6 +47,11 @@ class Usuario
             $this->setLogin($row['login']);
             $this->setSenha($row['senha']);
         }
+        else
+        {
+            throw new Exception("Login e/ou senha inválidos.");
+        }
+
     }
 
 
@@ -55,7 +79,6 @@ class Usuario
 
         return $result;
     }
-
 
     public function __toString()
     {
