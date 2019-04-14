@@ -2,8 +2,8 @@
 require_once ('config.php');
 
 
-$usuario = new Usuario();
+$usuario = new Usuario("Patolino Físico", "Quark");
 
-$usuario->login("Fanisz", "y2y2y2y2");
+$usuario->insert();
 
 echo $usuario;
