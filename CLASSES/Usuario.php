@@ -10,6 +10,9 @@ class Usuario
     private $login;
     private $senha;
 
+    const RAW_LIST = 1;
+    const JSON_LIST = 2;
+
     public function loadById($id)
     {
         $sql = new Sql();
@@ -28,9 +31,7 @@ class Usuario
     }
 
 
-    const RAW_LIST = 1;
-    const JSON_LIST = 2;
-    public static function loadAll($list_style = self::RAW_LIST){
+    public static function loadAll($list_style = self::JSON_LIST){
         $sql = new Sql();
         $list = $sql->select("SELECT * FROM tb_usuarios");
 
