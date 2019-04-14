@@ -39,6 +39,28 @@ class Usuario
         }
     }
 
+
+    public function delete($id = 0)
+    {
+        $sql = new Sql();
+
+        if ($id == 0 || $id == $this->getId())
+        {
+            $params = array(
+                ":ID"=>$this->getId() # Deleta o registro do próprio objeto
+            );
+
+            $this->setData(null);
+        }
+        else
+            $params = array(
+                ":ID"=>$id # Deleta um registro especificado
+            );
+
+        $sql->query("DELETE FROM tb_usuarios WHERE id = :ID", $params);
+
+    }
+
     public function update($login, $senha)
     {
         $this->setLogin($login);
@@ -74,9 +96,18 @@ class Usuario
 
     private function setData($data)
     {
-        $this->setId($data['id']);
-        $this->setLogin($data['login']);
-        $this->setSenha($data['senha']);
+        if ($data == null)
+        {
+            $this->setId(null);
+            $this->setLogin(null);
+            $this->setSenha(null);
+        }
+        else
+        {
+            $this->setId($data['id']);
+            $this->setLogin($data['login']);
+            $this->setSenha($data['senha']);
+        }
     }
 
     public function loadById($id)
@@ -122,6 +153,9 @@ class Usuario
 
     public function __toString()
     {
+        if ($this->getId() == null)
+            return "Nenhum registro carregado. Tente utilizar o método 'loadById(\$id)'";
+
 
         $this->loadById($this->getId());
 
