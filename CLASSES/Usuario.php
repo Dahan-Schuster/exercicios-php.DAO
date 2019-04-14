@@ -40,6 +40,22 @@ class Usuario
         return $list;
     }
 
+
+    public static function search($login, $list_style = self::JSON_LIST)
+    {
+        $sql = new Sql();
+
+        $result = $sql->select("SELECT * FROM tb_usuarios WHERE login LIKE :SEARCH", array(
+           ":SEARCH"=>'%'.$login.'%'
+        ));
+
+        if ($list_style == self::JSON_LIST)
+            return json_encode($result);
+
+        return $result;
+    }
+
+
     public function __toString()
     {
         return json_encode(array(
