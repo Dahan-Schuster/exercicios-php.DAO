@@ -30,6 +30,10 @@ class Usuario
             $this->setLogin($row['login']);
             $this->setSenha($row['senha']);
         }
+        else
+        {
+            throw new Exception("Login e/ou senha inválidos.");
+        }
     }
 
     public function loadById($id)
@@ -46,10 +50,6 @@ class Usuario
             $this->setId($row['id']);
             $this->setLogin($row['login']);
             $this->setSenha($row['senha']);
-        }
-        else
-        {
-            throw new Exception("Login e/ou senha inválidos.");
         }
 
     }
