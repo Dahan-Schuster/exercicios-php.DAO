@@ -27,6 +27,19 @@ class Usuario
         }
     }
 
+
+    const RAW_LIST = 1;
+    const JSON_LIST = 2;
+    public static function loadAll($list_style = self::RAW_LIST){
+        $sql = new Sql();
+        $list = $sql->select("SELECT * FROM tb_usuarios");
+
+        if ($list_style == self::JSON_LIST)
+            return json_encode($list);
+
+        return $list;
+    }
+
     public function __toString()
     {
         return json_encode(array(
