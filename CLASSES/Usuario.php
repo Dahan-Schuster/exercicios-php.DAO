@@ -14,6 +14,12 @@ class Usuario
     const JSON_LIST = 2;
 
 
+    public function __construct($login = null, $senha = null)
+    {
+        $this->setLogin($login);
+        $this->setSenha($senha);
+    }
+
     public function login($login, $senha)
     {
         $sql = new Sql();
@@ -25,15 +31,38 @@ class Usuario
 
         if (count($result) > 0)
         {
-            $row = $result[0];
-            $this->setId($row['id']);
-            $this->setLogin($row['login']);
-            $this->setSenha($row['senha']);
+            $this->setData($result[0]);
         }
         else
         {
             throw new Exception("Login e/ou senha inválidos.");
         }
+    }
+
+    public function insert()
+    {
+        $sql = new Sql();
+
+        $result = $sql->select("CALL sp_usuarios_insert(:LOGIN, :SENHA)", array(
+            ":LOGIN"=>$this->getLogin(),
+            ":SENHA"=>$this->getSenha()
+        ));
+
+        if (count($result) > 0){
+            $this->setData($result[0]);
+        }
+        else
+        {
+            throw new Exception("Usuário não inserido");
+        }
+
+    }
+
+    private function setData($data)
+    {
+        $this->setId($data['id']);
+        $this->setLogin($data['login']);
+        $this->setSenha($data['senha']);
     }
 
     public function loadById($id)
@@ -46,10 +75,7 @@ class Usuario
 
         if (count($result) > 0)
         {
-            $row = $result[0];
-            $this->setId($row['id']);
-            $this->setLogin($row['login']);
-            $this->setSenha($row['senha']);
+           $this->setData($result[0]);
         }
 
     }
