@@ -39,6 +39,20 @@ class Usuario
         }
     }
 
+    public function update($login, $senha)
+    {
+        $this->setLogin($login);
+        $this->setSenha($senha);
+
+        $sql = new Sql();
+
+       $sql->query("UPDATE tb_usuarios SET login = :LOGIN, senha = :SENHA WHERE id = :ID", array(
+            ":LOGIN"=>$this->getLogin(),
+            ":SENHA"=>$this->getSenha(),
+            ":ID"=>$this->getId()
+        ));
+    }
+
     public function insert()
     {
         $sql = new Sql();
@@ -108,6 +122,9 @@ class Usuario
 
     public function __toString()
     {
+
+        $this->loadById($this->getId());
+
         return json_encode(array(
             "id"=>$this->getId(),
             "login"=>$this->login,
