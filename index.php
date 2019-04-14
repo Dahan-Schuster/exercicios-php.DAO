@@ -2,6 +2,6 @@
 require_once ('config.php');
 
 
-$usuarios = Usuario::loadAll(Usuario::JSON_LIST);
+$usuarios = Usuario::search('a');
 
 echo $usuarios;
